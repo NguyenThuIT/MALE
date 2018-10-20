@@ -122,4 +122,10 @@ public class ProductServiceImpl implements ProductService {
             throw new ResourceNotFoundException("Product " + id + " not found");
         }
     }
+
+    @Override
+    public Integer countProductsByCategoryId(int productId) {
+        productRepository.count();
+        return productId;
+    }
 }

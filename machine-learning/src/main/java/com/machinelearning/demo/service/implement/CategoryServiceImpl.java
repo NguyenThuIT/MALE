@@ -49,11 +49,15 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategory(int categoryId) {
         Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
-        if(!optionalCategory.isPresent()){
+        if (!optionalCategory.isPresent()) {
             throw new ResourceNotFoundException("Category " + categoryId + " not found");
         }
-        else {
-            throw new ResourceNotFoundException("Having " + productRepository.count() + " product is running");
+        Category foundCategory = optionalCategory.get();
+        if (!foundCategory.getProducts().isEmpty()) {
+            productRepository.count();
+            throw new ResourceNotFoundException("Having " + productRepository.countProductsByCategoryId(categoryId) + " product is running");
+        } else {
+            categoryRepository.deleteById(categoryId);
         }
     }
 }

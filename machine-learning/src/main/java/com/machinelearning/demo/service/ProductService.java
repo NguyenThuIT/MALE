@@ -18,4 +18,6 @@ public interface ProductService {
     ProductDTO getSingleProduct(Integer productId);
 
     void deleteProduct(Integer id);
+
+    Integer countProductsByCategoryId(int productId);
 }
