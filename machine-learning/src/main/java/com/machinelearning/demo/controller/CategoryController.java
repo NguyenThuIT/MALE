@@ -3,10 +3,7 @@ package com.machinelearning.demo.controller;
 import com.machinelearning.demo.api.dto.CategoryDTO;
 import com.machinelearning.demo.service.CategoryService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +20,11 @@ public class CategoryController {
     @ResponseStatus(HttpStatus.OK)
     public List<CategoryDTO> getAllCategory(){
         return categoryService.getAllCategory();
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryDTO getCategory(@PathVariable Long categoryId){
+        return categoryService.getCategory(categoryId);
     }
 }
