@@ -7,8 +7,4 @@ import com.machinelearning.demo.domain.Product;
 
 public interface ProductMapper {
     ProductDTO productToProductDTO(Product product);
-
-    Product productCreatedDTOToProduct(ProductCreatedDTO productCreatedDTO);
-
-    Product productUpdatedDTOToProduct(ProductUpdatedDTO productUpdatedDTO);
 }

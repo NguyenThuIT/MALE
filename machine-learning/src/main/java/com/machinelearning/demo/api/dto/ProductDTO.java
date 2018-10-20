@@ -10,6 +10,7 @@ import lombok.Setter;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +19,11 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDTO {
+
+    @NotBlank
+    @NotNull
+    private Integer id;
+
     @NotBlank
     private String name;
 
@@ -31,7 +37,7 @@ public class ProductDTO {
 
     private String category;
 
-    private Long categoryId;
+    private Integer categoryId;
 
     private Set<Order> orders = new HashSet<>();
 }

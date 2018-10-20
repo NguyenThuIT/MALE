@@ -24,7 +24,13 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CategoryDTO getCategory(@PathVariable Long categoryId){
+    public CategoryDTO getCategory(@PathVariable("id") Integer categoryId){
         return categoryService.getCategory(categoryId);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteCategory(@PathVariable("id") Integer categoryId){
+        categoryService.deleteCategory(categoryId);
     }
 }

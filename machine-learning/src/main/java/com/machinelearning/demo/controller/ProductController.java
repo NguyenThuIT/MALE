@@ -30,7 +30,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ProductDTO getSingleProduct(@PathVariable Long productId){
+    public ProductDTO getSingleProduct(@PathVariable("id") Integer productId){
         return productService.getSingleProduct(productId);
     }
 
@@ -40,7 +40,7 @@ public class ProductController {
         return productService.addProduct(productCreatedDTO);
     }
 
-    @PutMapping("/update/{id}")
+    @PatchMapping("/update/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public ProductDTO updateProduct(@RequestBody ProductUpdatedDTO productUpdatedDTO){
         return productService.updateProduct(productUpdatedDTO);
@@ -48,7 +48,7 @@ public class ProductController {
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteProduct(Long id){
+    public void deleteProduct(@PathVariable("id") Integer id){
         productService.deleteProduct(id);
     }
 }

@@ -38,11 +38,4 @@ public class AccountServiceImpl implements AccountService {
         Account saveAccount = accountRepository.save(accountMapper.accountCreatedDTOToAccount(accountCreatedDTO));
         return accountMapper.accountToAccountDTO(saveAccount);
     }
-
-    @Override
-    public AccountDTO updateAccount(AccountUpdatedDTO accountUpdatedDTO) {
-        Account updateAccount = accountRepository.save(accountMapper.accountUpdatedDTOToAccount(accountUpdatedDTO));
-        return accountMapper.accountToAccountDTO(updateAccount);
-    }
-
 }

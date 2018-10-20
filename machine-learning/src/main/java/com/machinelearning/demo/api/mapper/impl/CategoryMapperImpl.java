@@ -27,6 +27,7 @@ public class CategoryMapperImpl implements CategoryMapper {
         if(category==null) return null;
         else {
             CategoryDTO categoryDTO = new CategoryDTO();
+            categoryDTO.setId(category.getId());
             categoryDTO.setName(category.getName());
             categoryDTO.setDescription(category.getDescription());
             categoryDTO.setProducts(category.getProducts().stream()

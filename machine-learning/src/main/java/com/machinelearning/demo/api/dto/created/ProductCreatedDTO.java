@@ -23,9 +23,9 @@ public class ProductCreatedDTO {
 
     private String image;
 
-    private Long orderId;
+    private Integer orderId;
 
     private String category;
 
-    private Long categoryId;
+    private Integer categoryId;
 }

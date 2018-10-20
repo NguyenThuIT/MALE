@@ -6,6 +6,7 @@ import com.machinelearning.demo.api.dto.updated.ProductUpdatedDTO;
 import com.machinelearning.demo.api.mapper.ProductMapper;
 import com.machinelearning.demo.domain.Category;
 import com.machinelearning.demo.domain.Product;
+import com.machinelearning.demo.exception.ResourceNotFoundException;
 import com.machinelearning.demo.repository.CategoryRepository;
 import com.machinelearning.demo.repository.ProductRepository;
 import com.machinelearning.demo.service.ProductService;
@@ -57,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
 
             return productMapper.productToProductDTO(product);
         } else {
-            throw new RuntimeException("Category not found");
+            throw new ResourceNotFoundException("Category not found");
         }
     }
 
@@ -101,17 +102,24 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO getSingleProduct(Long productId) {
+    public ProductDTO getSingleProduct(Integer productId) {
         Optional<Product> optionalProduct = productRepository.findById(productId);
         if (optionalProduct.isPresent()) {
             return productMapper.productToProductDTO(optionalProduct.get());
         } else {
-            throw new RuntimeException("Product not found");
+            throw new ResourceNotFoundException("Product "+ productId + "not found");
         }
     }
 
     @Override
-    public void deleteProduct(Long id) {
-        productRepository.deleteById(id);
+    public void deleteProduct(Integer id) {
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        if (optionalProduct.isPresent()) {
+            Category category = optionalProduct.get().getCategory();
+            categoryRepository.save(category.removeProduct(optionalProduct.get()));
+            productRepository.delete(optionalProduct.get());
+        } else {
+            throw new ResourceNotFoundException("Product " + id + " not found");
+        }
     }
 }
