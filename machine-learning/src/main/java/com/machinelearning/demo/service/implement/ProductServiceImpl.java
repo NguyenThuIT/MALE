@@ -9,6 +9,7 @@ import com.machinelearning.demo.domain.Product;
 import com.machinelearning.demo.repository.CategoryRepository;
 import com.machinelearning.demo.repository.ProductRepository;
 import com.machinelearning.demo.service.ProductService;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,14 +39,75 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO addProduct(ProductCreatedDTO productCreatedDTO) {
-        Product saveProduct = productRepository.save(productMapper.productCreatedDTOToProduct(productCreatedDTO));
-        return productMapper.productToProductDTO(saveProduct);
+        Optional<Category> optionalCategory = categoryRepository.findById(productCreatedDTO.getCategoryId());
+        if (optionalCategory.isPresent()) {
+            Category category = optionalCategory.get();
+
+            Product product = new Product();
+            product.setName(productCreatedDTO.getName());
+            product.setAmount(productCreatedDTO.getAmount());
+            product.setCost(productCreatedDTO.getCost());
+            product.setDescription(productCreatedDTO.getDescription());
+            product.setImage(productCreatedDTO.getImage());
+            product.setCategory(category);
+            productRepository.save(product);
+
+            category.getProducts().add(product);
+            categoryRepository.save(category);
+
+            return productMapper.productToProductDTO(product);
+        } else {
+            throw new RuntimeException("Category not found");
+        }
     }
 
     @Override
     public ProductDTO updateProduct(ProductUpdatedDTO productUpdatedDTO){
-        Product updatedProduct = productMapper.productUpdatedDTOToProduct(productUpdatedDTO);
-        return productMapper.productToProductDTO(updatedProduct);
+        Optional<Product> optionalProduct = productRepository.findById(productUpdatedDTO.getId());
+        if (!optionalProduct.isPresent()) {
+            return null;
+        }
+        Product product = optionalProduct.get();
+        if (productUpdatedDTO.getCategoryId() != null) {
+            Category category = product.getCategory();
+            categoryRepository.save(category.removeProduct(product));
+
+            Optional<Category> optionalCategory = categoryRepository.findById(productUpdatedDTO.getCategoryId());
+            if (optionalCategory.isPresent()) {
+                categoryRepository.save(optionalCategory.get().addProduct(product));
+                product.setCategory(optionalCategory.get());
+            }
+
+        }
+        if (productUpdatedDTO.getName() != null) {
+            product.setName(productUpdatedDTO.getName());
+        }
+        if (productUpdatedDTO.getDescription() != null) {
+            product.setDescription(productUpdatedDTO.getDescription());
+        }
+        if (productUpdatedDTO.getCost() != product.getCost()) {
+            product.setCost(productUpdatedDTO.getCost());
+        }
+        if (productUpdatedDTO.getImage() != null) {
+            product.setImage(productUpdatedDTO.getImage());
+        }
+
+        if (productUpdatedDTO.getAmount() != product.getAmount()) {
+            product.setAmount(productUpdatedDTO.getAmount());
+        }
+
+        Product savedProduct = productRepository.save(product);
+        return productMapper.productToProductDTO(savedProduct);
+    }
+
+    @Override
+    public ProductDTO getSingleProduct(Long productId) {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (optionalProduct.isPresent()) {
+            return productMapper.productToProductDTO(optionalProduct.get());
+        } else {
+            throw new RuntimeException("Product not found");
+        }
     }
 
     @Override

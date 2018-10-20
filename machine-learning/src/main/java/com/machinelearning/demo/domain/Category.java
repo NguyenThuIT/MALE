@@ -29,4 +29,23 @@ public class Category {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, mappedBy = "category")
     private Set<Product> products = new HashSet<>();
+
+    public Category removeProduct(Product product){
+        if(this.products==null) {
+            this.products = new HashSet<>();
+            return this;
+        }
+        if(product!=null) this.products.remove(product);
+        return this;
+
+    }
+    public Category addProduct(Product product){
+        if(this.products==null) {
+            this.products = new HashSet<>();
+            return this;
+        }
+        if(product!=null) this.products.add(product);
+        return this;
+
+    }
 }

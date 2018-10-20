@@ -28,19 +28,25 @@ public class ProductController {
         return productService.getAllProduct();
     }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductDTO getSingleProduct(@PathVariable Long productId){
+        return productService.getSingleProduct(productId);
+    }
+
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public ProductDTO addProducts(@RequestBody ProductCreatedDTO productCreatedDTO){
         return productService.addProduct(productCreatedDTO);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public ProductDTO updateProduct(@RequestBody ProductUpdatedDTO productUpdatedDTO){
         return productService.updateProduct(productUpdatedDTO);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteProduct(Long id){
         productService.deleteProduct(id);
