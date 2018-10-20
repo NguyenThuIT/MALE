@@ -31,16 +31,4 @@ public class AccountMapperImpl implements AccountMapper {
             return account;
         }
     }
-
-    @Override
-    public Account accountUpdatedDTOToAccount(AccountUpdatedDTO accountUpdatedDTO) {
-        if (accountUpdatedDTO == null) return null;
-        else {
-            Account account = new Account();
-            account.setUsername(account.getUsername());
-            account.setPassword(account.getPassword());
-            return account;
-        }
-    }
-
 }

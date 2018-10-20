@@ -13,6 +13,7 @@ public class OrderMappeImpl implements OrderMapper {
         if (order == null) return null;
         else {
             OrderDTO orderDTO = new OrderDTO();
+            orderDTO.setId(order.getId());
             orderDTO.setCustomer(order.getCustomer());
             orderDTO.setAmount(order.getAmount());
             orderDTO.setDateCreated(order.getDateCreated());

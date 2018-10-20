@@ -9,6 +9,4 @@ public interface AccountMapper {
     AccountDTO accountToAccountDTO(Account account);
 
     Account accountCreatedDTOToAccount(AccountCreatedDTO accountCreatedDTO);
-
-    Account accountUpdatedDTOToAccount(AccountUpdatedDTO accountUpdatedDTO);
 }

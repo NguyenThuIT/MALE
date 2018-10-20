@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +21,11 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDTO {
+
+    @NotNull
+    @NotBlank
+    private Integer id;
+
     @NotBlank
     private String dateCreated;
 

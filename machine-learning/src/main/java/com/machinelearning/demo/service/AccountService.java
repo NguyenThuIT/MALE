@@ -13,6 +13,4 @@ public interface AccountService {
     Set<AccountDTO> getAllAccount(AccountDTO accountDTO);
 
     AccountDTO addAccount(AccountCreatedDTO accountCreatedDTO);
-
-    AccountDTO updateAccount(AccountUpdatedDTO accountUpdatedDTO);
 }

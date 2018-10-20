@@ -16,7 +16,7 @@ public class ProductUpdatedDTO {
 
     @NotBlank
     @NotNull
-    private Long id;
+    private Integer id;
 
     @NotBlank
     private String name;
@@ -29,9 +29,9 @@ public class ProductUpdatedDTO {
 
     private String image;
 
-    private Long orderId;
+    private Integer orderId;
 
     private String category;
 
-    private Long categoryId;
+    private Integer categoryId;
 }
