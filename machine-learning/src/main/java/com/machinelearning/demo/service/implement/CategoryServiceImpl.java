@@ -3,6 +3,7 @@ package com.machinelearning.demo.service.implement;
 import com.machinelearning.demo.api.dto.CategoryDTO;
 import com.machinelearning.demo.api.mapper.CategoryMapper;
 import com.machinelearning.demo.domain.Category;
+import com.machinelearning.demo.exception.RelatedResourceException;
 import com.machinelearning.demo.exception.ResourceNotFoundException;
 import com.machinelearning.demo.repository.CategoryRepository;
 import com.machinelearning.demo.repository.ProductRepository;
@@ -49,11 +50,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategory(int categoryId) {
         Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
-        if(!optionalCategory.isPresent()){
+        if (!optionalCategory.isPresent()) {
             throw new ResourceNotFoundException("Category " + categoryId + " not found");
         }
-        else {
-            throw new ResourceNotFoundException("Having " + productRepository.count() + " product is running");
+        Category foundCategory = optionalCategory.get();
+        if (!foundCategory.getProducts().isEmpty()) {
+            throw new RelatedResourceException("Can not delete. " + foundCategory.getProducts().size() + " product is contained");
+        } else {
+            categoryRepository.deleteById(categoryId);
         }
     }
 }
