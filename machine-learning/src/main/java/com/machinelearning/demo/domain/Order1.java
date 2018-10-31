@@ -6,35 +6,30 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class Product {
+public class Order1 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank
-    private String name;
-
-    private String description;
-
-    private double cost;
-
     private int amount;
 
-    private String image;
+    private double price;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Category category;
+    private String dateCreated;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, mappedBy = "product")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Customer customer;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "order1")
     private Set<Item> items = new HashSet<>();
+
 }

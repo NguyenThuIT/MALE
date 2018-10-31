@@ -1,16 +1,12 @@
 package com.machinelearning.demo.controller;
 
 import com.machinelearning.demo.api.dto.ProductDTO;
-import com.machinelearning.demo.api.dto.created.AccountCreatedDTO;
 import com.machinelearning.demo.api.dto.created.ProductCreatedDTO;
 import com.machinelearning.demo.api.dto.updated.ProductUpdatedDTO;
-import com.machinelearning.demo.domain.Product;
 import com.machinelearning.demo.service.ProductService;
-import javafx.scene.effect.SepiaTone;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 
 @RequestMapping("/product")

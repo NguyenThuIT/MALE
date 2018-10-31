@@ -14,14 +14,14 @@ public class DataLoader implements CommandLineRunner {
     private final ProductRepository productRepository;
     private final AccountRepository accountRepository;
     private final CustomerRepository customerRepository;
-    private final OrderRepository orderRepository;
+    private final Order1Repository order1Repository;
 
-    public DataLoader(CategoryRepository categoryRepository, ProductRepository productRepository, AccountRepository accountRepository, CustomerRepository customerRepository, OrderRepository orderRepository) {
+    public DataLoader(CategoryRepository categoryRepository, ProductRepository productRepository, AccountRepository accountRepository, CustomerRepository customerRepository, Order1Repository order1Repository) {
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
         this.accountRepository = accountRepository;
         this.customerRepository = customerRepository;
-        this.orderRepository = orderRepository;
+        this.order1Repository = order1Repository;
     }
 
     @Transactional
@@ -74,6 +74,49 @@ public class DataLoader implements CommandLineRunner {
         Account account1 = new Account();
         account1.setUsername("tailam");
         account1.setPassword("123");
-        accountRepository.save(account1);
+
+        Account account2 = new Account();
+        account2.setUsername("thunguyen");
+        account2.setPassword("456");
+
+        Account account3 = new Account();
+        account3.setUsername("hocnguyen");
+        account3.setPassword("789");
+
+        Account saveAccount1 = accountRepository.save(account1);
+        Account saveAccount2 = accountRepository.save(account2);
+        Account saveAccount3 = accountRepository.save(account3);
+
+        Customer customer1 = new Customer();
+        customer1.setName("Tai Lam");
+        customer1.setPhone("12345678");
+        customer1.setEmail("tailam@gmail.com");
+        customer1.setAccount(saveAccount1);
+        account1.setCustomer(customer1);
+        Customer saveCustomer1 = customerRepository.save(customer1);
+
+        Customer customer2 = new Customer();
+        customer2.setName("Thu Nguyen");
+        customer2.setPhone("0909898998");
+        customer2.setEmail("thunguyen@gmail.com");
+        customer2.setAccount(saveAccount2);
+        account2.setCustomer(customer2);
+        Customer saveCustomer2 = customerRepository.save(customer2);
+
+        Customer customer3 = new Customer();
+        customer3.setName("Tai Lam");
+        customer3.setPhone("12345678");
+        customer3.setEmail("tailam@gmail.com");
+        customer3.setAccount(saveAccount3);
+        account3.setCustomer(customer3);
+        Customer saveCustomer3 = customerRepository.save(customer3);
+
+//        Order1 order1 = new Order1();
+//        order1.setPrice(200);
+//        order1.setAmount(3);
+//        order1.setItems(saveProduct1.getItems());
+//        order1.setDateCreated("31-10-2018");
+//        order1.setCustomer(saveCustomer1);
+//        order1Repository.save(order1);
     }
 }
