@@ -20,7 +20,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDTO {
+public class Order1DTO {
 
     @NotNull
     @NotBlank
@@ -33,5 +33,9 @@ public class OrderDTO {
 
     private double price;
 
-    private Customer customer;
+    private String customer;
+
+    private Integer customerId;
+
+    private Set<ItemDTO> itemDTOS = new HashSet<>();
 }

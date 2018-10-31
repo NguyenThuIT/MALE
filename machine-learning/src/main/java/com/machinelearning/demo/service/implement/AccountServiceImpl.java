@@ -26,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Set<AccountDTO> getAllAccount(AccountDTO accountDTO) {
+    public Set<AccountDTO> getAllAccount() {
         return accountRepository.findAll()
                 .stream()
                 .map(accountMapper::accountToAccountDTO)
