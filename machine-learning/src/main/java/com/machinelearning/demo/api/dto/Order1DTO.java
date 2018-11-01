@@ -37,5 +37,5 @@ public class Order1DTO {
 
     private Integer customerId;
 
-    private Set<ItemDTO> itemDTOS = new HashSet<>();
+    private Set<ItemDTO> items = new HashSet<>();
 }

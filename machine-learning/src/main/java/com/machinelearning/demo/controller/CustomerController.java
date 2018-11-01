@@ -37,4 +37,10 @@ public class CustomerController {
     public CustomerDTO updateCustomer(@RequestBody CustomerUpdateDTO customerUpdateDTO){
         return customerService.updateCustomer(customerUpdateDTO);
     }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CustomerDTO getSingleCustomer(@PathVariable("id") Integer customerId){
+        return customerService.getSingleCustomer(customerId);
+    }
 }

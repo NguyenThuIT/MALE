@@ -30,4 +30,10 @@ public class AccountController {
     public AccountDTO addAccount(@RequestBody AccountCreatedDTO accountCreatedDTO){
         return accountService.addAccount(accountCreatedDTO);
     }
+
+    @GetMapping("/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public AccountDTO getSingleAccount(@PathVariable("username") String accountUsername){
+        return accountService.getSingleAccount(accountUsername);
+    }
 }

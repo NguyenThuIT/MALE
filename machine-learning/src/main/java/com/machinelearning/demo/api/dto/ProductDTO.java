@@ -34,5 +34,5 @@ public class ProductDTO {
 
     private Integer categoryId;
 
-    private Set<ItemDTO> itemDTOS = new HashSet<>();
+    private Set<ItemDTO> items = new HashSet<>();
 }

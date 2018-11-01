@@ -15,4 +15,6 @@ public interface CustomerService {
     CustomerDTO addCustomer(CustomerCreatedDTO customerCreatedDTO);
 
     CustomerDTO updateCustomer(CustomerUpdateDTO customerUpdateDTO);
+
+    CustomerDTO getSingleCustomer(Integer customerId);
 }
