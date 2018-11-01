@@ -1,14 +1,21 @@
 package com.machinelearning.demo.api.mapper.impl;
 
-import com.machinelearning.demo.api.dto.created.ProductCreatedDTO;
 import com.machinelearning.demo.api.dto.ProductDTO;
-import com.machinelearning.demo.api.dto.updated.ProductUpdatedDTO;
+import com.machinelearning.demo.api.mapper.ItemMapper;
 import com.machinelearning.demo.api.mapper.ProductMapper;
 import com.machinelearning.demo.domain.Product;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 public class ProductMapperImpl implements ProductMapper {
+
+    private final ItemMapper itemMapper;
+
+    public ProductMapperImpl(ItemMapper itemMapper) {
+        this.itemMapper = itemMapper;
+    }
 
     @Override
     public ProductDTO productToProductDTO(Product product) {
@@ -23,6 +30,10 @@ public class ProductMapperImpl implements ProductMapper {
             productDTO.setImage(product.getImage());
             productDTO.setCategory(product.getCategory().getName());
             productDTO.setCategoryId(product.getCategory().getId());
+            productDTO.setItems(product.getItems()
+                    .stream()
+                    .map(itemMapper::itemToItemDTO)
+                    .collect(Collectors.toSet()));
             return productDTO;
         }
     }

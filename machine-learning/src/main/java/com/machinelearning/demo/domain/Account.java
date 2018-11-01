@@ -24,7 +24,6 @@ public class Account {
     @NotBlank
     private String password;
 
-    @OneToOne( fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "account", cascade = CascadeType.ALL, optional = false)
     private Customer customer;
 }

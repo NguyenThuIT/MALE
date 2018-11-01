@@ -30,7 +30,8 @@ public class Customer {
     @Email
     private String email;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL, optional = false)
+    @OneToOne( fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_username")
     private Account account;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "customer")

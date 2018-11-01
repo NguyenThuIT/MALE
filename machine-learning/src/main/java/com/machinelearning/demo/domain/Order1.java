@@ -32,4 +32,23 @@ public class Order1 {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "order1")
     private Set<Item> items = new HashSet<>();
 
+    public Order1 removeItem(Item item){
+        if(this.items==null) {
+            this.items = new HashSet<>();
+            return this;
+        }
+        if(item!=null) this.items.remove(item);
+        return this;
+
+    }
+    public Order1 addItem(Item item){
+        if(this.items==null) {
+            this.items = new HashSet<>();
+            return this;
+        }
+        if(item!=null) this.items.add(item);
+        return this;
+
+    }
+
 }

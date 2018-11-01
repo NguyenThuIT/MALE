@@ -11,4 +11,6 @@ public interface AccountService {
     Set<AccountDTO> getAllAccount();
 
     AccountDTO addAccount(AccountCreatedDTO accountCreatedDTO);
+
+    AccountDTO getSingleAccount(String accountUsername);
 }

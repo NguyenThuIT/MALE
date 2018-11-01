@@ -1,4 +1,4 @@
-package com.machinelearning.demo.api.dto;
+package com.machinelearning.demo.api.dto.created;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemDTO {
+public class ItemCreatedDTO {
 
     private Integer itemId;
 

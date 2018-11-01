@@ -16,7 +16,6 @@ public class AccountMapperImpl implements AccountMapper {
             AccountDTO accountDTO = new AccountDTO();
             accountDTO.setUsername(account.getUsername());
             accountDTO.setPassword(account.getPassword());
-            accountDTO.setCustomer(account.getCustomer());
             return accountDTO;
         }
     }

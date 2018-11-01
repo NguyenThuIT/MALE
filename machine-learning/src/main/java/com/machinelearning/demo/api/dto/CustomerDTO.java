@@ -30,7 +30,7 @@ public class CustomerDTO {
     @Email
     private String email;
 
-    private Account account;
+    private String accountUsername;
 
     private Set<Order1DTO> order = new HashSet<>();
 }

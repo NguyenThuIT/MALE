@@ -37,4 +37,23 @@ public class Product {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, mappedBy = "product")
     private Set<Item> items = new HashSet<>();
+
+    public Product removeItem(Item item){
+        if(this.items==null) {
+            this.items = new HashSet<>();
+            return this;
+        }
+        if(item!=null) this.items.remove(item);
+        return this;
+
+    }
+    public Product addItem(Item item){
+        if(this.items==null) {
+            this.items = new HashSet<>();
+            return this;
+        }
+        if(item!=null) this.items.add(item);
+        return this;
+
+    }
 }

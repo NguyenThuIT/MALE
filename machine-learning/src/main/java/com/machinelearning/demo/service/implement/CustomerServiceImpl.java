@@ -63,4 +63,15 @@ public class CustomerServiceImpl implements CustomerService {
         Customer saveCustomer = customerRepository.save(customer);
         return customerMapper.customerToCustomerDTO(saveCustomer);
     }
+
+    @Override
+    public CustomerDTO getSingleCustomer(Integer customerId) {
+        Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+        if (optionalCustomer.isPresent()){
+            return customerMapper.customerToCustomerDTO(optionalCustomer.get());
+        }
+        else{
+            throw new ResourceNotFoundException("Customer " + customerId + " not found");
+        }
+    }
 }

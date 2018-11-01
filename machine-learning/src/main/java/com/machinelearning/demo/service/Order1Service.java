@@ -6,4 +6,6 @@ import java.util.Set;
 
 public interface Order1Service {
     Set<Order1DTO> getAllOrder();
+
+    Order1DTO getSingleOrder(Integer orderId);
 }
