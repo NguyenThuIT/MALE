@@ -1,0 +1,7 @@
+package com.machinelearning.demo.repository;
+
+import com.machinelearning.demo.domain.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CategoryRepository extends JpaRepository<Category, Integer> {
+}
