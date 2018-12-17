@@ -17,4 +17,6 @@ public interface CustomerService {
     CustomerDTO updateCustomer(CustomerUpdateDTO customerUpdateDTO);
 
     CustomerDTO getSingleCustomer(Integer customerId);
+
+    void deleteCustomer(Integer customerId);
 }

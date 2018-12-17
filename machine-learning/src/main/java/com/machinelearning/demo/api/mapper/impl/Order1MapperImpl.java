@@ -23,10 +23,10 @@ public class Order1MapperImpl implements Order1Mapper {
         else {
             Order1DTO order1DTO = new Order1DTO();
             order1DTO.setId(order1.getId());
-            order1DTO.setAmount(order1.getAmount());
+            order1DTO.setAmount(order1.getItems().size());
             order1DTO.setDateCreated(order1.getDateCreated());
             order1DTO.setPrice(order1.getPrice());
-            order1DTO.setCustomer(order1.getCustomer().getName());
+            order1DTO.setCustomerName(order1.getCustomer().getName());
             order1DTO.setCustomerId(order1.getCustomer().getId());
             order1DTO.setItems(order1.getItems()
                     .stream()

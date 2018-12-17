@@ -33,7 +33,7 @@ public class Order1DTO {
 
     private double price;
 
-    private String customer;
+    private String customerName;
 
     private Integer customerId;
 

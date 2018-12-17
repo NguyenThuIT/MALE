@@ -3,16 +3,15 @@ package com.machinelearning.demo.service.implement;
 
 import com.machinelearning.demo.api.dto.created.AccountCreatedDTO;
 import com.machinelearning.demo.api.dto.AccountDTO;
-import com.machinelearning.demo.api.dto.updated.AccountUpdatedDTO;
 import com.machinelearning.demo.api.mapper.AccountMapper;
 import com.machinelearning.demo.domain.Account;
+import com.machinelearning.demo.domain.Customer;
 import com.machinelearning.demo.exception.ResourceNotFoundException;
 import com.machinelearning.demo.repository.AccountRepository;
+import com.machinelearning.demo.repository.CustomerRepository;
 import com.machinelearning.demo.service.AccountService;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;

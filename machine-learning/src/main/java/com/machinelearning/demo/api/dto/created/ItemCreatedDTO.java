@@ -13,6 +13,8 @@ public class ItemCreatedDTO {
 
     private Integer itemId;
 
+    private String itemName;
+
     private Integer orderId;
 
     private Integer productId;

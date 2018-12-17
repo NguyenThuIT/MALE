@@ -35,6 +35,12 @@ public class ItemController {
         return itemService.addItem(itemCreatedDTO);
     }
 
+    @PatchMapping("/update/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ItemDTO updateItem(@RequestBody ItemDTO itemDTO){
+        return itemService.updateItem(itemDTO);
+    }
+
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteItem(@PathVariable("id") Integer itemId){

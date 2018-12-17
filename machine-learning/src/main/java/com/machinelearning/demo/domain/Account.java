@@ -9,6 +9,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.awt.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,4 +28,7 @@ public class Account {
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "account", cascade = CascadeType.ALL, optional = false)
     private Customer customer;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "account")
+    private Set<Rating> ratings = new HashSet<>();
 }

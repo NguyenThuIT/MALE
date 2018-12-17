@@ -14,11 +14,13 @@ public class ItemMapperImpl implements ItemMapper {
         if (item == null) return null;
         else {
             ItemDTO itemDTO = new ItemDTO();
+            itemDTO.setItemName(item.getItemName());
             itemDTO.setItemId(item.getId());
             itemDTO.setAmount(item.getAmount());
             itemDTO.setCost(item.getCost());
             itemDTO.setOrderId(item.getOrder1().getId());
             itemDTO.setProductId(item.getProduct().getId());
+            itemDTO.setRatingCount(item.getRating().getRatingCount());
             return itemDTO;
         }
     }

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,7 +31,8 @@ public class Product {
 
     private int amount;
 
-    private String image;
+    @Embedded
+    private Image image;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;

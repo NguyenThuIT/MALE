@@ -37,8 +37,8 @@ public class Category {
         }
         if(product!=null) this.products.remove(product);
         return this;
-
     }
+
     public Category addProduct(Product product){
         if(this.products==null) {
             this.products = new HashSet<>();
