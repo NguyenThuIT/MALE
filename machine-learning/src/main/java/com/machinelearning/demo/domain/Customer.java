@@ -36,4 +36,24 @@ public class Customer {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "customer")
     private Set<Order1> orders = new HashSet<>();
+
+    public Customer removeOrder(Order1 order1){
+        if(this.orders==null) {
+            this.orders = new HashSet<>();
+            return this;
+        }
+        if(order1!=null) this.orders.remove(order1);
+        return this;
+
+    }
+
+    public Customer addOrder(Order1 order1){
+        if(this.orders==null) {
+            this.orders = new HashSet<>();
+            return this;
+        }
+        if(order1!=null) this.orders.add(order1);
+        return this;
+
+    }
 }

@@ -43,4 +43,11 @@ public class CustomerController {
     public CustomerDTO getSingleCustomer(@PathVariable("id") Integer customerId){
         return customerService.getSingleCustomer(customerId);
     }
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteCustomer(@PathVariable("id") Integer customerId){
+        customerService.deleteCustomer(customerId);
+        return;
+    }
 }

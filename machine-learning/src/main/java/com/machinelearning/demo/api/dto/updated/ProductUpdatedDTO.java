@@ -1,5 +1,6 @@
 package com.machinelearning.demo.api.dto.updated;
 
+import com.machinelearning.demo.domain.Image;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,7 @@ public class ProductUpdatedDTO {
 
     private int amount;
 
-    private String image;
+    private Image image;
 
     private Integer orderId;
 

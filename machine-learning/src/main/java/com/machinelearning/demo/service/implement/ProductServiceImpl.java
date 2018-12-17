@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
 
             return productMapper.productToProductDTO(product);
         } else {
-            throw new ResourceNotFoundException("Category not found");
+            throw new ResourceNotFoundException("Category " + productCreatedDTO.getCategoryId() + " not found");
         }
     }
 

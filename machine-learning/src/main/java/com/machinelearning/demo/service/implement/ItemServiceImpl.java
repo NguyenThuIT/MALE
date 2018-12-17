@@ -60,6 +60,7 @@ public class ItemServiceImpl implements ItemService {
             Product product = optionalProduct.get();
 
             Item item = new Item();
+            item.setItemName(itemCreatedDTO.getItemName());
             item.setAmount(itemCreatedDTO.getAmount());
             item.setCost(itemCreatedDTO.getCost());
             item.setOrder1(order1);
@@ -76,6 +77,53 @@ public class ItemServiceImpl implements ItemService {
             throw new ResourceNotFoundException("Order " + itemCreatedDTO.getOrderId() + " & Product " + itemCreatedDTO.getProductId() + " not found");
         }
 
+    }
+
+    @Override
+    public ItemDTO updateItem(ItemDTO itemDTO) {
+        Optional<Item> optionalItem = itemRepository.findById(itemDTO.getItemId());
+        if (!optionalItem.isPresent()) {
+            throw new ResourceNotFoundException("Item " + itemDTO.getItemId() + " not found");
+        }
+        Item item = optionalItem.get();
+        if (itemDTO.getOrderId() != null) {
+            Order1 order1 = item.getOrder1();
+            order1Repository.save(order1.removeItem(item));
+
+            Optional<Order1> optionalOrder1 = order1Repository.findById(itemDTO.getOrderId());
+            if (optionalOrder1.isPresent()) {
+                order1Repository.save(optionalOrder1.get().addItem(item));
+                item.setOrder1(optionalOrder1.get());
+            }
+
+        }
+
+        if (itemDTO.getProductId() != null) {
+            Product product = item.getProduct();
+            productRepository.save(product.removeItem(item));
+
+            Optional<Product> optionalProduct = productRepository.findById(itemDTO.getProductId());
+            if (optionalProduct.isPresent()) {
+                productRepository.save(optionalProduct.get().addItem(item));
+                item.setProduct(optionalProduct.get());
+            }
+
+        }
+
+        if (itemDTO.getItemName() != null){
+            item.setItemName(itemDTO.getItemName());
+        }
+
+        if (itemDTO.getCost() != item.getCost()) {
+            item.setCost(itemDTO.getCost());
+        }
+
+        if (itemDTO.getAmount() != item.getAmount()) {
+            item.setAmount(itemDTO.getAmount());
+        }
+
+        Item saveItem = itemRepository.save(item);
+        return itemMapper.itemToItemDTO(saveItem);
     }
 
     @Override

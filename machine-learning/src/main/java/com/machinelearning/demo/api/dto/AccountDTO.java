@@ -1,6 +1,7 @@
 package com.machinelearning.demo.api.dto;
 
 import com.machinelearning.demo.domain.Customer;
+import com.machinelearning.demo.domain.Rating;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,6 @@ public class AccountDTO {
 
     @NotBlank
     private String password;
+
+    private Set<RatingDTO> rating = new HashSet<>();
 }
