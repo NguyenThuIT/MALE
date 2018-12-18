@@ -1,12 +1,20 @@
 import pandas as pd
+import math
+import numpy as np
+from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.linear_model import Ridge
+from sklearn import linear_model
+
 #Đọc file user(u) - u.user 
 u_cols = ['user_id', 'age', 'sex', 'occupation', 'zip_code']
 #Đường dẫn file dataset
 users = pd.read_csv('E:/15110CL4/ML/Project/Code/ml-100k/u.user', 
 sep = '|', names = u_cols, encoding='latin-1')
+print('Danh sách các user:')
+print(users)
 #In số lượng user trong file data
 n_users = users.shape[0]
-print('number users:', n_users)
+print('Số lượng user:', n_users)
 
 
 #Đọc file ratings(r)-ua.base, ua.test
@@ -21,7 +29,9 @@ rate_train = ratings_base.as_matrix()
 rate_test = ratings_test.as_matrix()
 
 print ('number of training rates:', rate_train.shape[0])
+print(ratings_base)
 print ('number of test rates:', rate_test.shape[0])
+print(ratings_test)
 
 
 
@@ -34,7 +44,8 @@ items = pd.read_csv('E:/15110CL4/ML/Project/Code/ml-100k/u.item',
  sep='|', names=i_cols, encoding='latin-1')
 
 n_items = items.shape[0]
-print ('Number of items:', n_items)
+print ('Số lượng của item:', n_items)
+print (items)
 
 
 
@@ -43,35 +54,36 @@ print ('Number of items:', n_items)
 X0 = items.as_matrix()
 #X_train_counts: Mảng có 19 cột mang các giá trị 0, 1
 X_train_counts = X0[:, -19:]
-print (X0)
+#print (X0)
+c_cols=['unknown', 'Action', 'Adventure',
+ 'Animation', 'Children\'s', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Fantasy',
+ 'Film-Noir', 'Horror', 'Musical', 'Mystery', 'Romance', 'Sci-Fi', 'Thriller', 'War', 'Western']
+print (c_cols)
 print (X_train_counts)
 
 
 #Xây dựng feature vector cho mỗi item dựa trên ma trận thể loại phim (X_train_counts)
 #TfidfTransformer (TF-IDF): chuyển đổi dạng biểu diễn văn bản thành dạng không gian vector (VSM)
-from sklearn.feature_extraction.text import TfidfTransformer
 transformer = TfidfTransformer(smooth_idf=True, norm ='l2')
 tfidf = transformer.fit_transform(X_train_counts.tolist()).toarray()
 #Mỗi hàng của ma trận tfids là feature vector của một bộ phim
+print('Feature Vector của một bộ phim :')
 print(tfidf)
 
 
 #Với mỗi user, xác định những vộ phim mà user đó đã rate và giá trị của rating đó
-import numpy as np
 def get_items_rated_by_user(rate_matrix, user_id):
     """ return (item_ids, scores) """
     #Của tất cả user
     y = rate_matrix[:,0] 
     # item indices rated by user_id
     ids = np.where(y == user_id +1)[0] 
-    #python đếm bắt đầu bằn 0 nên -1
+    #python đếm bắt đầu bằng 0 nên -1
     item_ids = rate_matrix[ids, 1] - 1 
     scores = rate_matrix[ids, 2]
     return (item_ids, scores)
 
-#Tìm hệ số Ridge Regression cho mỗi user
-from sklearn.linear_model import Ridge
-from sklearn import linear_model
+#Tìm hệ số Ridge Regression cho mỗi user: Hàm mất mát của Linear Regession
 
 # data dimension
 d = tfidf.shape[1] 
@@ -93,12 +105,15 @@ for n in range(n_users):
     #intercept_: Trả về sai số
     b[0, n] = clf.intercept_
 
-print ('W: ', W)
-print ('b: ', b)
+print ('Hệ số hồi quy W: ')
+print(W)
+print ('Sai số b: ')
+print(b)
 
-#Ratind cho mỗi items được dự đoán bằng cách tính
+#Rating cho mỗi items được dự đoán bằng cách tính
 Yhat = tfidf.dot(W) + b
-print ('Yhat: ', Yhat)
+print ('Rating cho mỗi items Yhat: ')
+print(Yhat)
 
 #Example/ Test
 #user id
@@ -109,4 +124,19 @@ ids, scores = get_items_rated_by_user(rate_test, n)
 Yhat[n, ids]
 print('Rated movies ids :', ids )
 print('True ratings     :', scores)
+#Rating dự đoán
 print('Predicted ratings:', Yhat[ids, n])
+#Đánh giá mô hình: Căn bậc 2 trung bình cộng bình phương
+def evaluate(Yhat, rates, W, b):
+    se = 0
+    cnt = 0
+    for n in range(n_users):
+        ids, scores_truth = get_items_rated_by_user(rates, n)
+        scores_pred = Yhat[ids, n]
+        e = scores_truth - scores_pred 
+        se += (e*e).sum(axis = 0)
+        cnt += e.size 
+    return math.sqrt(se/cnt)
+
+print ('RMSE for training:', evaluate(Yhat, rate_train, W, b))
+print ('RMSE for test    :', evaluate(Yhat, rate_test, W, b))
